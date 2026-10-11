@@ -1,0 +1,986 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pink-100: #fde4ec;
+  --pink-200: #fbd3df;
+  --rose: #d97a98;
+  --rose-deep: #b5577a;
+  --text: #7a3d55;
+  --sage: #9fb69b;
+  --floret-edge: #efc3d2;
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-hover: rgba(255, 255, 255, 0.8);
+}
+
+/* Pages still scroll, just without a visible scrollbar. Overscrolling past
+   the edges no longer bounces, and the pink gradient sits on the page itself
+   so any gap that does show isn't white. Nothing can scroll sideways either.
+   The gradient lives here, not on body, so the sky (behind body) stays visible. */
+html {
+  background: linear-gradient(180deg, var(--pink-100) 0%, var(--pink-200) 100%) var(--pink-200);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  overscroll-behavior: none;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  line-height: 1.5;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: page-in 0.5s ease-out;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* ---------- Page transitions ---------- */
+
+body.page-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes page-in {
+  from { opacity: 0; }
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0.5rem 16px 2rem;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------- Logo ---------- */
+
+.logo-wrap {
+  position: relative;
+  text-align: center;
+  padding: 3.5rem 16px 2.5rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.logo-small {
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  margin-right: -0.5em; /* offset trailing letter-spacing so it stays centred */
+}
+
+.logo-script {
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(3rem, 11vw, 5.5rem);
+  color: var(--rose);
+  text-shadow: 0 2px 18px rgba(255, 255, 255, 0.9);
+  padding: 0 0.15em;
+}
+
+/* Clickable title that quietly leads to the secret page */
+.logo-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.logo-link:hover,
+.logo-link:focus-visible {
+  outline: none;
+  color: var(--rose-deep);
+}
+
+.logo-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 0.4rem;
+}
+
+/* Each side holds a small sprig of baby's breath reaching away from the heart */
+.logo-divider span {
+  display: block;
+}
+
+.logo-divider span .sprig {
+  height: 28px;
+  width: auto;
+}
+
+.logo-divider span:last-child {
+  transform: scaleX(-1);
+}
+
+.logo-divider > svg {
+  width: 14px;
+  height: 13px;
+  fill: var(--rose);
+  animation: heart-beat 1.8s ease-in-out infinite;
+}
+
+/* Small handwritten note centred under the heart divider */
+.logo-wrap:has(.splash) {
+  padding-bottom: 0.5rem;
+}
+
+.splash {
+  margin: 1rem 0 0;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  color: var(--rose-deep);
+  white-space: nowrap;
+  animation: splash-pulse 2.4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.2); }
+}
+
+@keyframes splash-pulse {
+  from { transform: scale(1); opacity: 0.75; }
+  to   { transform: scale(1.05); opacity: 1; }
+}
+
+/* ---------- Menu buttons ---------- */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Links styled as buttons get the same line height and look as real buttons,
+   so the two sit evenly side by side in a menu */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--glass);
+  border: 1px solid rgba(217, 122, 152, 0.35);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(181, 87, 122, 0.08);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  outline: none;
+  color: var(--rose-deep);
+  background: var(--glass-hover);
+  border-color: var(--rose);
+  box-shadow: 0 8px 22px rgba(181, 87, 122, 0.16);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(181, 87, 122, 0.12);
+}
+
+/* ---------- Panel (dialog) ---------- */
+
+.panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(122, 61, 85, 0.18);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.25s ease-out;
+}
+
+.panel-backdrop[hidden] {
+  display: none;
+}
+
+.panel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  padding: 2rem 1.75rem 1.5rem;
+  background: rgba(255, 250, 252, 0.92);
+  border: 1px solid rgba(217, 122, 152, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(181, 87, 122, 0.2);
+  text-align: center;
+  animation: pop-in 0.3s ease-out;
+}
+
+.panel-title {
+  font-family: "Great Vibes", cursive;
+  font-size: 2.4rem;
+  font-weight: normal;
+  color: var(--rose);
+  margin-bottom: 0.75rem;
+}
+
+.panel-body {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.panel-actions .btn {
+  max-width: 160px;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes pop-in {
+  from { transform: translateY(10px) scale(0.97); opacity: 0; }
+}
+
+/* ---------- Login ---------- */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1.05rem;
+  color: var(--rose-deep);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font: inherit;
+  font-size: 1.15rem;
+  color: var(--text);
+  background: var(--glass-hover);
+  border: 1px solid rgba(217, 122, 152, 0.35);
+  border-radius: 999px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px rgba(217, 122, 152, 0.18);
+}
+
+.login-error {
+  min-height: 1.5em;
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
+  color: var(--rose-deep);
+}
+
+.login-form.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* ---------- Chapters ---------- */
+
+/* Chapters still to come: a faded, dashed button with a padlock */
+.btn.is-locked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-style: dashed;
+  box-shadow: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn.is-locked:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(217, 122, 152, 0.35);
+  box-shadow: none;
+  transform: none;
+}
+
+.chapter-lock {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.chapter-lock circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* ---------- Love letter ---------- */
+
+.letter {
+  padding: 2.5rem 2rem;
+  text-align: left;
+  line-height: 1.7;
+}
+
+.letter p + p {
+  margin-top: 1.1em;
+}
+
+.letter-greeting {
+  font-style: italic;
+  color: var(--rose-deep);
+}
+
+.letter-signoff {
+  text-align: right;
+  font-style: italic;
+}
+
+.letter-name {
+  font-family: "Great Vibes", cursive;
+  font-size: 2rem;
+  font-style: normal;
+  line-height: 1.3;
+  color: var(--rose);
+}
+
+@media (max-width: 520px) {
+  .letter {
+    padding: 2rem 1.25rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* ---------- Secret page ---------- */
+
+/* Big script link with a heart; the underline draws itself on hover */
+.secret-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0 0.15em 0.1em;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(2.4rem, 9vw, 3.2rem);
+  line-height: 1.2;
+  color: var(--rose);
+  text-decoration: none;
+}
+
+.secret-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.secret-link svg {
+  width: 0.4em;
+  height: 0.37em;
+  fill: currentColor;
+  animation: heart-beat 1.8s ease-in-out infinite;
+}
+
+.secret-link:focus-visible {
+  outline: none;
+}
+
+.secret-link:hover::after,
+.secret-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Section pages ---------- */
+
+.page-main {
+  max-width: 640px;
+}
+
+.page-card {
+  position: relative;
+  padding: 2rem 1.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  background: rgba(255, 250, 252, 0.85);
+  border: 1px solid rgba(217, 122, 152, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(181, 87, 122, 0.15);
+  text-align: center;
+}
+
+.page-back {
+  display: block;
+  max-width: 160px;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration: none;
+}
+
+.page-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  max-width: 332px;
+  margin: 0 auto;
+}
+
+.page-nav .btn {
+  text-align: center;
+  text-decoration: none;
+}
+
+/* ---------- Monthly gallery ---------- */
+
+.gallery {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gallery-track {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+}
+
+.gallery-month {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--rose-deep);
+}
+
+/* All month slides share one grid cell; only the active one is visible */
+.gallery-slide {
+  grid-area: 1 / 1;
+  /* Slides can have different shapes; centre each one instead of stretching it,
+     which would make the shorter ones grow wider and push the arrows out */
+  align-self: center;
+  min-width: 0;
+  position: relative;
+  container-type: inline-size; /* lets photocards size themselves in cqw (% of slide width) */
+  aspect-ratio: 1 / 0.95;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.gallery-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Polaroids tossed onto the table: overlapping, each at its own tilt.
+   Each frame takes its photo's shape (--ratio, set by script.js once it loads) and
+   grows until it reaches --max-w wide or its photo reaches --max-h tall. */
+.photocard {
+  --max-w: 52cqw;
+  --max-h: 48cqw;
+  position: absolute;
+  width: min(var(--max-w), calc(var(--max-h) * var(--ratio, 1) + 12px));
+  margin: 0;
+  padding: 6px 6px 20px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 20px rgba(181, 87, 122, 0.2);
+  transform: rotate(var(--tilt));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photocard:nth-child(1) { --tilt: -8deg; top: 2%;  left: 0; }
+.photocard:nth-child(2) { --tilt: 6deg;  top: 6%;  right: 0; }
+.photocard:nth-child(3) { --tilt: -2deg; bottom: 0; left: 24%; }
+
+/* One or two photos: polaroids standing side by side */
+.gallery-slide[data-count="1"],
+.gallery-slide[data-count="2"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4%;
+  aspect-ratio: 1 / 0.65;
+}
+
+.gallery-slide[data-count="1"] { aspect-ratio: 1 / 0.8; }
+
+.gallery-slide[data-count="1"] .photocard,
+.gallery-slide[data-count="2"] .photocard {
+  --max-w: 46cqw;
+  --max-h: 52cqw;
+  position: static;
+}
+
+.gallery-slide[data-count="1"] .photocard { --max-w: 70cqw; --max-h: 68cqw; --tilt: -3deg; }
+.gallery-slide[data-count="2"] .photocard:nth-child(1) { --tilt: -4deg; }
+.gallery-slide[data-count="2"] .photocard:nth-child(2) { --tilt: 4deg; }
+
+/* Four photos: one in each corner, slightly overlapping */
+.gallery-slide[data-count="4"] { aspect-ratio: 1 / 1.05; }
+.gallery-slide[data-count="4"] .photocard { --max-w: 46cqw; --max-h: 44cqw; }
+.gallery-slide[data-count="4"] .photocard:nth-child(1) { --tilt: -6deg; top: 0;     left: 2%;   bottom: auto; }
+.gallery-slide[data-count="4"] .photocard:nth-child(2) { --tilt: 5deg;  top: 3%;    right: 2%; }
+.gallery-slide[data-count="4"] .photocard:nth-child(3) { --tilt: 4deg;  bottom: 0;  left: 4%;   top: auto; }
+.gallery-slide[data-count="4"] .photocard:nth-child(4) { --tilt: -5deg; bottom: 2%; right: 0; }
+
+.photocard:hover {
+  z-index: 1;
+  transform: rotate(0deg) scale(1.06);
+  box-shadow: 0 14px 30px rgba(181, 87, 122, 0.28);
+}
+
+.photocard img {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio, 1);
+  object-fit: cover;
+  background: #fbeef3;
+}
+
+/* Short sentence under the photos, changing with each slide */
+.gallery-caption {
+  margin: 1.25rem auto 0;
+  max-width: 34ch;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text);
+}
+
+.gallery-caption:empty {
+  display: none;
+}
+
+.gallery-arrow {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--rose-deep);
+  background: var(--glass);
+  border: 1px solid rgba(217, 122, 152, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.gallery-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.gallery-arrow:not(:disabled):hover,
+.gallery-arrow:not(:disabled):focus-visible {
+  outline: none;
+  background: var(--glass-hover);
+  border-color: var(--rose);
+  transform: scale(1.08);
+}
+
+/* ---------- Us collage ---------- */
+
+.page-main--wide {
+  max-width: 920px;
+}
+
+/* Columns let photos of any shape stack together like a pinboard */
+.collage {
+  columns: 3 150px;
+  column-gap: 18px;
+  padding-top: 10px; /* room for the tape on the top row */
+}
+
+.collage-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 0 24px;
+  padding: 7px 7px 20px;
+  background: #fff;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 6px 16px rgba(181, 87, 122, 0.18);
+  break-inside: avoid;
+  font-family: inherit;
+  cursor: zoom-in;
+  transform: rotate(var(--tilt));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Each photo drops into place as it's found, one after another */
+  animation: pin-up 0.55s ease-out var(--delay, 0s) backwards;
+}
+
+/* A strip of washi tape holding each polaroid up */
+.collage-card::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 58px;
+  height: 20px;
+  background: rgba(239, 195, 210, 0.7);
+  box-shadow: 0 1px 3px rgba(181, 87, 122, 0.15);
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+.collage-card:nth-child(even)::before {
+  background: rgba(198, 216, 194, 0.75);
+  transform: translateX(-50%) rotate(5deg);
+}
+
+.collage-card:hover,
+.collage-card:focus-visible {
+  outline: none;
+  z-index: 1;
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 14px 30px rgba(181, 87, 122, 0.3);
+}
+
+.collage-card:focus-visible {
+  box-shadow: 0 0 0 3px var(--rose), 0 14px 30px rgba(181, 87, 122, 0.3);
+}
+
+@keyframes pin-up {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(calc(var(--tilt) * 2)) scale(0.96);
+  }
+}
+
+.collage-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fbeef3;
+}
+
+/* Handwritten-style note on the polaroid's bottom strip */
+.collage-caption {
+  display: block;
+  padding: 8px 4px 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+/* Enlarged photo, with arrows to flip through the rest */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 56px 16px;
+  background: rgba(122, 61, 85, 0.45);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  animation: fade-in 0.25s ease-out;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox-photo {
+  min-width: 0;
+  margin: 0;
+  padding: 8px 8px 14px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 20px 50px rgba(122, 61, 85, 0.35);
+  text-align: center;
+  cursor: default;
+  animation: pop-in 0.3s ease-out;
+}
+
+.lightbox-photo img {
+  display: block;
+  max-width: min(80vw, 900px);
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+}
+
+.lightbox-photo figcaption {
+  max-width: 40ch;
+  margin: 10px auto 0;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text);
+}
+
+.lightbox-photo figcaption:empty {
+  display: none;
+}
+
+.lightbox-arrow {
+  cursor: pointer;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  color: #fff;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.lightbox-count {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* Only one photo: nothing to flip through */
+.lightbox.is-single .lightbox-arrow,
+.lightbox.is-single .lightbox-count {
+  display: none;
+}
+
+/* Phones: arrows sit over the photo's edges so the photo can use the full width */
+@media (max-width: 600px) {
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    transform: translateY(-50%);
+  }
+  .lightbox-arrow[data-dir="-1"] { left: 8px; }
+  .lightbox-arrow[data-dir="1"] { right: 8px; }
+  .lightbox-photo img { max-width: 88vw; }
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 16px;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--rose-deep);
+  opacity: 0.8;
+}
+
+/* ---------- Background scene: puffy clouds and falling baby's breath ---------- */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  left: 0;
+  width: var(--w);
+  height: calc(var(--w) * 0.5);
+  opacity: 0.92;
+  filter: blur(1.5px) drop-shadow(0 6px 10px rgba(226, 120, 155, 0.18));
+  animation: cloud-drift var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+/* Each puff is a softly shaded ball; overlapping puffs form the cloud */
+.puff {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 30%, #fff 55%, #fbeef3 80%, #f6dde7 100%);
+}
+
+@keyframes cloud-drift {
+  from { transform: translateX(-40vw); }
+  to   { transform: translateX(110vw); }
+}
+
+/* ---------- Baby's breath sprigs ---------- */
+
+.sprig {
+  display: block;
+  overflow: visible;
+}
+
+.sprig-stems {
+  fill: none;
+  stroke: var(--sage);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sprig-florets {
+  fill: #fff;
+  stroke: var(--floret-edge);
+  stroke-width: 0.5;
+}
+
+/* Sprigs tucked onto opposite corners of cards and panels */
+.card-sprig {
+  position: absolute;
+  z-index: 2;
+  width: 64px;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(181, 87, 122, 0.18));
+}
+
+.card-sprig .sprig {
+  width: 100%;
+  height: auto;
+}
+
+.card-sprig--start { top: -26px; left: -20px; transform: rotate(-38deg); }
+.card-sprig--end   { bottom: -26px; right: -20px; transform: rotate(142deg); }
+
+/* Mini bouquets that occasionally tumble down, rocking side to side */
+.bouquet {
+  position: absolute;
+  top: -100px;
+  left: var(--x);
+  width: var(--size);
+  filter: drop-shadow(0 3px 5px rgba(181, 87, 122, 0.25));
+  animation: bouquet-fall var(--dur) linear forwards;
+}
+
+.bouquet svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: bouquet-sway 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes bouquet-fall {
+  to { transform: translateY(calc(100vh + 200px)); }
+}
+
+@keyframes bouquet-sway {
+  from { transform: translateX(-18px) rotate(-18deg); }
+  to   { transform: translateX(18px) rotate(14deg); }
+}
+
+.petal {
+  position: absolute;
+  top: -20px;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  opacity: var(--opacity);
+  filter: drop-shadow(0 1px 2px rgba(181, 87, 122, 0.35));
+  animation: petal-fall var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+.petal svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  animation: petal-sway calc(var(--dur) / 4) ease-in-out infinite alternate;
+}
+
+@keyframes petal-fall {
+  to { transform: translateY(calc(100vh + 40px)); }
+}
+
+@keyframes petal-sway {
+  from { transform: translateX(-25px) rotate(-30deg); }
+  to   { transform: translateX(25px) rotate(40deg); }
+}
+
+@media (max-width: 520px) {
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .cloud,
+  .petal,
+  .petal svg,
+  .logo-divider > svg,
+  .secret-link svg,
+  .login-form.shake,
+  .collage-card,
+  .splash {
+    animation: none;
+  }
+}

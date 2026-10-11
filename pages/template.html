@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Page title shown on the browser tab -->
+  <title>Monthly Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!--
+    TEMPLATE FOR "OUR STORY" PAGES
+    To make a new page: copy this file, rename it (e.g. firsts.html), then add the
+    new name to STORY_PAGES in js/script.js. Back/Next buttons update by themselves.
+
+    Change the heading below, then the gallery settings on the data-gallery line:
+
+      data-photos     Folder the photos live in. Each slide has its own subfolder
+                      holding 1.jpg, 2.jpg, ... (one per photo).
+
+      data-per-slide  Photos on each slide: 1, 2, 3 or 4.
+                      Same for every slide:  data-per-slide="3"
+                      Different per slide:   data-per-slide="2 | 3 | 1"
+                      (slide 1 gets 2, slide 2 gets 3, the rest get 1;
+                      the last number repeats for any extra slides)
+
+    Then pick ONE way to name the slides:
+
+      Months   data-start="2025-10" data-slides="6"
+               6 slides: October 2025, November 2025, ...
+               Use data-slides="auto" to always run up to the current month.
+               Subfolders: 2025-10, 2025-11, ...
+
+      Numbers  data-label="Matching Profile" data-slides="5"
+               5 slides: Matching Profile 1 ... Matching Profile 5
+               Subfolders: 1, 2, 3, ...
+
+      Titles   data-titles="First date | First trip | Moving in"
+               One slide per title, separated by |
+               Subfolders: 1, 2, 3, ...
+  -->
+  <header class="logo-wrap">
+    <h1 class="logo">
+      <span class="logo-script">Monthly Gallery</span>
+    </h1>
+    <div class="logo-divider" aria-hidden="true">
+      <span></span><svg viewBox="0 0 24 22"><path d="M12 21s-9-5.6-9-12A5 5 0 0 1 12 6a5 5 0 0 1 9 3c0 6.4-9 12-9 12z"/></svg><span></span>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <article class="page-card">
+      <h2 class="gallery-month" aria-live="polite"></h2>
+      <div class="gallery" data-gallery
+           data-photos="../images/gallery"
+           data-per-slide="3"
+           data-start="2025-10" data-slides="auto">
+        <button class="gallery-arrow" data-dir="-1" aria-label="Previous slide">&#8249;</button>
+        <div class="gallery-track"></div>
+        <button class="gallery-arrow" data-dir="1" aria-label="Next slide">&#8250;</button>
+      </div>
+    </article>
+    <nav class="page-nav" data-story-nav>
+      <a class="btn" href="../index.html" data-back data-transition>Back</a>
+      <a class="btn" href="../index.html" data-next data-transition>Next</a>
+    </nav>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Images of Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <!--
+    COLLAGE SETTINGS (on the data-collage line below)
+
+      data-photos    Folder the photos live in: images/us/1.jpg, 2.png, 3.jpg ...
+                     Just add the next number and it shows up by itself, no count needed.
+                     .jpg, .jpeg, .png and .webp all work.
+
+      data-captions  Optional words under each photo, in order, separated by |
+                     Leave a spot empty to skip a photo:  "First | | Third"
+
+    Photos keep their own shape, so tall and wide ones mix together naturally.
+    Click a photo to see it large; use the arrows (or ← → keys) to flip through.
+  -->
+  <header class="logo-wrap">
+    <h1 class="logo">
+      <span class="logo-script">Images of Us</span>
+    </h1>
+    <div class="logo-divider" aria-hidden="true">
+      <span></span><svg viewBox="0 0 24 22"><path d="M12 21s-9-5.6-9-12A5 5 0 0 1 12 6a5 5 0 0 1 9 3c0 6.4-9 12-9 12z"/></svg><span></span>
+    </div>
+  </header>
+
+  <main class="page-main page-main--wide">
+    <article class="page-card">
+      <div class="collage" data-collage
+           data-photos="../images/us"
+           data-captions="
+           Sending each other photos for the first time. |
+           |
+           Our favourite photos of each other |
+           |
+           Love quizes. |
+           Our first ever matching profile picture |
+           |
+           Lippieeeee |
+           After getting together, this is the first movie we watched. Both seasons on the same day. |
+           The movie we bond over the most. |
+           Do you remember these? |
+           |
+           |
+           Our first time eating Burger King |
+           A single conversation that changed our lives. In this call. |
+           The first person to send an 'I love you' message. (You won)
+           ">
+      </div>
+    </article>
+    <a class="btn page-back" href="../index.html" data-transition>Back</a>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
